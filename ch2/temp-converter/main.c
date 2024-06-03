@@ -3,6 +3,13 @@
 #include <stdbool.h>
 #include <string.h>
 
+void print_usage() {
+  printf("Usage: \n");
+  printf("  --lower <num>\t- Minimum bound for the table\n");
+  printf("  --upper <num>\t- Maximum bound for the table\n");
+  printf("  --step <num>\t- Amount to increase for each row of the table\n");
+}
+
 // Checks whether the given string is a natural number
 bool str_is_int(char* str) {
   for (int i = 0; str[i] != '\0'; i++) {
@@ -40,17 +47,20 @@ int get_int_arg(
   int value_pos = flag_pos + 1;
   if (value_pos >= argc) {
     printf("Flag %s is not followed by its value\n", flag_name);
+    print_usage();
     exit(-1);
   }
 
   char* value = argv[value_pos];
   if (!str_is_int(value)) {
     printf("Value %s is not an integer\n", value);
+    print_usage();
     exit(-1);
   }
 
   return atoi(value);
 }
+
 
 float fahr_to_celsius(float fahr) {
   return (5.0/9.0) * (fahr - 32.0);
