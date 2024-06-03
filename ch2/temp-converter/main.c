@@ -5,7 +5,9 @@
 
 void print_usage();
 bool str_is_int(char* str);
+char* get_flag_value(int argc, char* argv[], char* name);
 int get_int_arg(int argc, char* argv[], char* name, int default_value);
+char* get_str_arg(int argc, char* argv[], char* name, char* default_value);
 float fahr_to_celsius(float fahr);
 void print_header(int columnc, char* columns[]);
 
@@ -57,12 +59,8 @@ bool str_is_int(char* str) {
   return true;
 }
 
-int get_int_arg(
-    int argc, 
-    char* argv[], 
-    char* name, 
-    int default_value
-) {
+// Finds the value given to some flag (i.e. the value following it)
+char* get_flag_value(int argc, char* argv[], char* name) {
   int flag_name_len = strlen(name) + 2;
   char flag_name[flag_name_len];
   sprintf(flag_name, "--%s", name);
@@ -76,7 +74,7 @@ int get_int_arg(
   }
 
   if (flag_pos == -1) {
-    return default_value; 
+    return NULL;
   }
 
   int value_pos = flag_pos + 1;
@@ -86,7 +84,21 @@ int get_int_arg(
     exit(-1);
   }
 
-  char* value = argv[value_pos];
+  return argv[value_pos];
+}
+
+int get_int_arg(
+    int argc, 
+    char* argv[], 
+    char* name, 
+    int default_value
+) {
+  char* value = get_flag_value(argc, argv, name);
+  
+  if (value == NULL) {
+    return default_value;
+  }
+
   if (!str_is_int(value)) {
     printf("Value %s is not an integer\n", value);
     print_usage();
@@ -95,6 +107,19 @@ int get_int_arg(
 
   return atoi(value);
 }
+
+// TODO: Finish this and use it to pass a flag
+// --to "celsius" or --to "fahrenheit" to decide the behavior
+/*
+char* get_str_arg(
+    int argc, 
+    char* argv[],
+    char* name, 
+    char* default_value
+) {
+
+}
+*/
 
 float fahr_to_celsius(float fahr) {
   return (5.0/9.0) * (fahr - 32.0);
