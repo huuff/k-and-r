@@ -7,6 +7,7 @@ void print_usage();
 bool str_is_int(char* str);
 int get_int_arg(int argc, char* argv[], char* name, int default_value);
 float fahr_to_celsius(float fahr);
+void print_header(int columnc, char* columns[]);
 
 int main(int argc, char* argv[]) {
   int lower = get_int_arg(argc, argv, "lower", 0);
@@ -17,8 +18,10 @@ int main(int argc, char* argv[]) {
     printf("The upper bound (%d) can't be lower than the lower bound (%d)\n", upper, lower);
   }
 
+  char* columns[] = { "Fahrenheit", "Celsius" };
+  print_header(2, columns);
   for (float fahr = lower; fahr <= upper; fahr += step) {
-    printf("%3.0f %6.1f\n", fahr, fahr_to_celsius(fahr));
+    printf("%10.0f %10.1f\n", fahr, fahr_to_celsius(fahr));
   }
 
   return 0;
@@ -29,6 +32,17 @@ void print_usage() {
   printf("  --lower <num>\t- Minimum bound for the table\n");
   printf("  --upper <num>\t- Maximum bound for the table\n");
   printf("  --step <num>\t- Amount to increase for each row of the table\n");
+}
+
+void print_header(int columnc, char* columns[]) {
+  for (int i = 0; i < columnc; i++) {
+    printf("%10s", columns[i]);
+  }
+  printf("\n");
+  for (int i = 0; i < columnc; i++) {
+    printf("===========");
+  }
+  printf("\n");
 }
 
 // Checks whether the given string is a natural number
