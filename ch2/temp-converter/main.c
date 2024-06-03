@@ -21,10 +21,14 @@ int get_int_arg(
     char* name, 
     int default_value
 ) {
+  int flag_name_len = strlen(name) + 2;
+  char flag_name[flag_name_len];
+  sprintf(flag_name, "--%s", name);
+
   int flag_pos = -1;
 
   for (int i = 0; i < argc; i++) {
-    if (strcmp(argv[i], name) == 0) {
+    if (strcmp(argv[i], flag_name) == 0) {
       flag_pos = i;
     }
   }
