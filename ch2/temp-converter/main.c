@@ -39,14 +39,14 @@ int get_int_arg(
 
   int value_pos = flag_pos + 1;
   if (value_pos >= argc) {
-    // TODO: There's no value, panic!
-    return default_value;
+    printf("Flag %s is not followed by its value\n", flag_name);
+    exit(-1);
   }
 
   char* value = argv[value_pos];
   if (!str_is_int(value)) {
-    // TODO: Same! Also panic!!!
-    return default_value;
+    printf("Value %s is not an integer\n", value);
+    exit(-1);
   }
 
   return atoi(value);
