@@ -4,10 +4,10 @@
 #include <string.h>
 
 // Checks whether the given string is a natural number
-bool str_is_nat(char* str) {
+bool str_is_int(char* str) {
   for (int i = 0; str[i] != '\0'; i++) {
     char value = str[i];
-    if (value < '0' || value > '9') {
+    if (value != '-' && (value < '0' || value > '9')) {
       return false;
     }
   }
@@ -15,7 +15,12 @@ bool str_is_nat(char* str) {
   return true;
 }
 
-int get_int_arg(int argc, char* argv[], char* name, int default_value) {
+int get_int_arg(
+    int argc, 
+    char* argv[], 
+    char* name, 
+    int default_value
+) {
   int flag_pos = -1;
 
   for (int i = 0; i < argc; i++) {
@@ -35,7 +40,7 @@ int get_int_arg(int argc, char* argv[], char* name, int default_value) {
   }
 
   char* value = argv[value_pos];
-  if (!str_is_nat(value)) {
+  if (!str_is_int(value)) {
     // TODO: Same! Also panic!!!
     return default_value;
   }
