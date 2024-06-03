@@ -1,15 +1,12 @@
 #include <stdio.h>
 
 int main() {
-  float fahr, celsius;
-  int lower, upper, step;
+  int lower = 0;
+  int upper = 300;
+  int step = 20;
 
-  lower = 0;
-  upper = 300;
-  step = 20;
-
-  for (fahr = lower; fahr <= upper; fahr += step) {
-    celsius = (5.0/9.0) * (fahr-32.0);
+  for (float fahr = lower; fahr <= upper; fahr += step) {
+    float celsius = (5.0/9.0) * (fahr-32.0);
     printf("%3.0f %6.1f\n", fahr, celsius);
   }
 
