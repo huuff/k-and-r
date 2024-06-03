@@ -13,6 +13,10 @@ int main(int argc, char* argv[]) {
   int upper = get_int_arg(argc, argv, "upper", 300);
   int step = get_int_arg(argc, argv, "step", 20);
 
+  if (upper < lower) {
+    printf("The upper bound (%d) can't be lower than the lower bound (%d)\n", upper, lower);
+  }
+
   for (float fahr = lower; fahr <= upper; fahr += step) {
     printf("%3.0f %6.1f\n", fahr, fahr_to_celsius(fahr));
   }
