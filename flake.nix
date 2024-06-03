@@ -1,5 +1,5 @@
 {
-  description = "Following Kerninghan & Ritchie C Programming Language Book";
+  description = "Following Kernighan & Ritchie C Programming Language Book";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
