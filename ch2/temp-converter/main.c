@@ -3,6 +3,25 @@
 #include <stdbool.h>
 #include <string.h>
 
+void print_usage();
+bool str_is_int(char* str);
+int get_int_arg(int argc, char* argv[], char* name, int default_value);
+float fahr_to_celsius(float fahr);
+
+
+
+int main(int argc, char* argv[]) {
+  int lower = get_int_arg(argc, argv, "lower", 0);
+  int upper = get_int_arg(argc, argv, "upper", 300);
+  int step = get_int_arg(argc, argv, "step", 20);
+
+  for (float fahr = lower; fahr <= upper; fahr += step) {
+    printf("%3.0f %6.1f\n", fahr, fahr_to_celsius(fahr));
+  }
+
+  return 0;
+}
+
 void print_usage() {
   printf("Usage: \n");
   printf("  --lower <num>\t- Minimum bound for the table\n");
@@ -61,19 +80,7 @@ int get_int_arg(
   return atoi(value);
 }
 
-
 float fahr_to_celsius(float fahr) {
   return (5.0/9.0) * (fahr - 32.0);
 }
 
-int main(int argc, char* argv[]) {
-  int lower = get_int_arg(argc, argv, "lower", 0);
-  int upper = get_int_arg(argc, argv, "upper", 300);
-  int step = get_int_arg(argc, argv, "step", 20);
-
-  for (float fahr = lower; fahr <= upper; fahr += step) {
-    printf("%3.0f %6.1f\n", fahr, fahr_to_celsius(fahr));
-  }
-
-  return 0;
-}
