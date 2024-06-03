@@ -8,8 +8,6 @@ bool str_is_int(char* str);
 int get_int_arg(int argc, char* argv[], char* name, int default_value);
 float fahr_to_celsius(float fahr);
 
-
-
 int main(int argc, char* argv[]) {
   int lower = get_int_arg(argc, argv, "lower", 0);
   int upper = get_int_arg(argc, argv, "upper", 300);
