@@ -13,7 +13,7 @@
     {
       devShell = with pkgs; mkShell {
         buildInputs = [
-          clang_18
+          clang-tools
         ];
       };
     }
