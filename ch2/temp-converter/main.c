@@ -8,7 +8,8 @@ bool str_is_int(char *str);
 char *get_flag_value(int argc, char *argv[], char *name);
 int get_int_arg(int argc, char *argv[], char *name, int default_value);
 char *get_str_arg(int argc, char *argv[], char *name, char *default_value);
-float fahr_to_celsius(float fahr);
+float fahrenheit_to_celsius(float fahr);
+float celsius_to_fahrenheit(float fahr);
 void print_header(int columnc, char *columns[]);
 
 int main(int argc, char *argv[]) {
@@ -22,17 +23,25 @@ int main(int argc, char *argv[]) {
     exit(-1);
   }
 
-  char *target = get_str_arg(argc, argv, "to", "celsius");
-  if (strcmp(target, "celsius") && strcmp(target, "fahrenheit")) {
+  char *target_unit = get_str_arg(argc, argv, "to", "celsius");
+  if (strcmp(target_unit, "celsius") && strcmp(target_unit, "fahrenheit")) {
     printf("The target (%s) must be either 'fahrenheit' or 'celsius'\n",
-           target);
+           target_unit);
     exit(-1);
   }
 
-  char *columns[] = {"Fahrenheit", "Celsius"};
-  print_header(2, columns);
-  for (float fahr = lower; fahr <= upper; fahr += step) {
-    printf("%10.0f %10.1f\n", fahr, fahr_to_celsius(fahr));
+  if (!strcmp(target_unit, "celsius")) {
+    char *columns[] = {"Fahrenheit", "Celsius"};
+    print_header(2, columns);
+    for (float fahr = lower; fahr <= upper; fahr += step) {
+      printf("%10.0f %10.1f\n", fahr, fahrenheit_to_celsius(fahr));
+    }
+  } else if (!strcmp(target_unit, "fahrenheit")) {
+    char *columns[] = {"Celsius", "Fahrenheit"};
+    print_header(2, columns);
+    for (float cels = lower; cels <= upper; cels += step) {
+      printf("%15.1f %15.1f\n", cels, celsius_to_fahrenheit(cels));
+    }
   }
 
   return 0;
@@ -47,11 +56,11 @@ void print_usage() {
 
 void print_header(int columnc, char *columns[]) {
   for (int i = 0; i < columnc; i++) {
-    printf("%10s", columns[i]);
+    printf("%15s", columns[i]);
   }
   printf("\n");
   for (int i = 0; i < columnc; i++) {
-    printf("===========");
+    printf("================");
   }
   printf("\n");
 }
@@ -122,4 +131,8 @@ char *get_str_arg(int argc, char *argv[], char *name, char *default_value) {
   return value;
 }
 
-float fahr_to_celsius(float fahr) { return (5.0 / 9.0) * (fahr - 32.0); }
+float fahrenheit_to_celsius(float fahr) { return (5.0 / 9.0) * (fahr - 32.0); }
+
+float celsius_to_fahrenheit(float celsius) {
+  return ((celsius * (9.0 / 5.0)) + 32);
+}
