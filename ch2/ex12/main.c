@@ -9,7 +9,7 @@ struct current_word {
 
 int main() {
   bool inside_word = false;
-  struct current_word current_word;
+  struct current_word current_word = {0};
 
   int c;
   while ((c = getchar()) != EOF) {
