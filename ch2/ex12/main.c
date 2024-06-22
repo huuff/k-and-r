@@ -2,28 +2,32 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+struct current_word {
+  int length;
+  char buffer[64];
+};
+
 int main() {
   bool inside_word = false;
-  char buffered_word[64];
-  int word_length = 0;
+  struct current_word current_word;
 
   int c;
   while ((c = getchar()) != EOF) {
-    if (isblank(c)) {
-      if (word_length > 0) {
-        buffered_word[word_length] = '\0';
-        printf("%s\n", buffered_word);
+    if (isblank(c) || c == '\n') {
+      if (current_word.length > 0) {
+        current_word.buffer[current_word.length] = '\0';
+        printf("%s\n", current_word.buffer);
       }
-      word_length = 0;
+      current_word.length = 0;
     } else {
-      buffered_word[word_length++] = (char)c;
+      current_word.buffer[current_word.length++] = (char)c;
     }
   }
 
   // TODO: Extract this behavior to a function?
-  if (word_length > 0) {
-    buffered_word[word_length] = '\0';
-    printf("%s", buffered_word);
+  if (current_word.length > 0) {
+    current_word.buffer[current_word.length] = '\0';
+    printf("%s", current_word.buffer);
   }
 
   return 0;
