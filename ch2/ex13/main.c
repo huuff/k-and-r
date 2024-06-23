@@ -4,8 +4,6 @@
 // TODO: Implement a vertical histogram
 // TODO: Try to decide whether to use plaintext, horizontal or vertical
 // histogram from some command-line argument
-// TODO: Something seems off... giving the "this is a word length text" doesn't
-// find any 5-letter words... but "length" has 5 letters
 
 // Surely some random german word is this long
 #define MAX_WORD_LENGTH 128
@@ -93,7 +91,7 @@ struct word_length_bounds find_word_length_bounds(int *word_lengths) {
   }
 
   for (int i = 0; i < MAX_WORD_LENGTH; i++) {
-    if (word_lengths[i] > word_length_bounds.max) {
+    if (word_lengths[i] > 0) {
       word_length_bounds.max = i;
     }
   }
