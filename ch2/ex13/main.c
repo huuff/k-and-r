@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // TODO: Implement a vertical histogram
 // TODO: Try to decide whether to use plaintext, horizontal or vertical
@@ -50,6 +51,7 @@ int main() {
 
   if (word_length_bounds.min == -1 || word_length_bounds.max == -1) {
     fprintf(stderr, "No words found!\n");
+    exit(1);
   }
 
   // print_lengths_plaintext(word_lengths, &word_length_bounds);
