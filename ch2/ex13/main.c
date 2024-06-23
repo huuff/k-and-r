@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+// TODO: Implement a vertical histogram
+// TODO: Try to decide whether to use plaintext, horizontal or vertical
+// histogram from some command-line argument
+// TODO: Something seems off... giving the "this is a word length text" doesn't
+// find any 5-letter words... but "length" has 5 letters
+
 // Surely some random german word is this long
 #define MAX_WORD_LENGTH 128
 
@@ -10,6 +16,8 @@ struct word_length_bounds {
 struct word_length_bounds find_word_length_bounds(int *word_lengths);
 void print_lengths_plaintext(int *word_lengths,
                              struct word_length_bounds *bounds);
+void print_horizontal_histogram(int *word_lengths,
+                                struct word_length_bounds *bounds);
 
 int main() {
   int word_lengths[MAX_WORD_LENGTH];
@@ -44,7 +52,8 @@ int main() {
     fprintf(stderr, "No words found!\n");
   }
 
-  print_lengths_plaintext(word_lengths, &word_length_bounds);
+  // print_lengths_plaintext(word_lengths, &word_length_bounds);
+  print_horizontal_histogram(word_lengths, &word_length_bounds);
 
   return 0;
 }
@@ -54,6 +63,18 @@ void print_lengths_plaintext(int *word_lengths,
 
   for (int i = bounds->min; i <= bounds->max; ++i) {
     printf("Length %d: %d\n", i, word_lengths[i]);
+  }
+}
+
+void print_horizontal_histogram(int *word_lengths,
+                                struct word_length_bounds *bounds) {
+  for (int i = bounds->min; i <= bounds->max; ++i) {
+    printf("Length %d:\t ", i);
+    int count = word_lengths[i];
+    for (int j = 0; j < count; j++) {
+      printf("*");
+    }
+    printf("\n");
   }
 }
 
