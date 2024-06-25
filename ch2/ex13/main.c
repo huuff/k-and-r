@@ -1,9 +1,9 @@
+#include <argp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // TODO: Implement a vertical histogram
-// TODO: Try to decide whether to use plaintext, horizontal or vertical
-// histogram from some command-line argument
 
 // Surely some random german word is this long
 #define MAX_WORD_LENGTH 128
@@ -18,7 +18,43 @@ void print_lengths_plaintext(int *word_lengths,
 void print_horizontal_histogram(int *word_lengths,
                                 struct word_length_bounds *bounds);
 
-int main() {
+// ARG PARSING
+static struct argp_option options[] = {
+    {"display", 'd', "TYPE", 0, "'horizontal' or 'plain'"}, {0}};
+
+struct arguments {
+  char *display;
+};
+
+static error_t parse_opt(int key, char *arg, struct argp_state *state) {
+  struct arguments *arguments = state->input;
+
+  switch (key) {
+  case 'd':
+    if (strcmp(arg, "horizontal") == 0 || strcmp(arg, "plain") == 0) {
+      arguments->display = arg;
+    } else {
+      argp_error(state, "Invalid display type, choose 'horizontal' or 'plain'");
+    }
+    break;
+  case ARGP_KEY_ARG:
+    argp_usage(state);
+    break;
+  case ARGP_KEY_END:
+    if (arguments->display == NULL) {
+      argp_error(state, "Display must be specified");
+    }
+    break;
+  default:
+    return ARGP_ERR_UNKNOWN;
+  }
+
+  return 0;
+}
+
+static struct argp argp = {options, parse_opt, "", ""};
+
+int main(int argc, char **argv) {
   int word_lengths[MAX_WORD_LENGTH];
 
   for (int i = 0; i < MAX_WORD_LENGTH; ++i) {
@@ -27,6 +63,9 @@ int main() {
 
   int current_word_length = 0;
   int c;
+
+  struct arguments arguments = {NULL};
+  argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
   while ((c = getchar()) != EOF) {
     if (c == '\n' || c == ' ' || c == '\t') {
@@ -52,8 +91,11 @@ int main() {
     exit(1);
   }
 
-  // print_lengths_plaintext(word_lengths, &word_length_bounds);
-  print_horizontal_histogram(word_lengths, &word_length_bounds);
+  if (strcmp(arguments.display, "plain") == 0) {
+    print_lengths_plaintext(word_lengths, &word_length_bounds);
+  } else if (strcmp(arguments.display, "horizontal") == 0) {
+    print_horizontal_histogram(word_lengths, &word_length_bounds);
+  }
 
   return 0;
 }
