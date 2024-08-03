@@ -4,7 +4,8 @@
 int main(int argc, char **argv) {
 
   struct word_length word_length = count();
-  print_plain(word_length);
+  /* print_plain(word_length); */
+  print_horizontal(word_length);
 
   return 0;
 }
