@@ -1,5 +1,5 @@
 main: main.out
-	./main.out
+	./main.out $(ARGS)
 
 main.out: *.c
-	clang *.c -o main.out	
+	clang *.c -o main.out
