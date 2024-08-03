@@ -1,8 +1,5 @@
-plain: main.out
-	./main.out --display plain
+main: main.out
+	./main.out $(ARGS)
 
-horizontal: main.out
-	./main.out --display horizontal
-
-main.out: main.c
-	clang main.c -o main.out
+main.out: *.c
+	clang *.c -o main.out
