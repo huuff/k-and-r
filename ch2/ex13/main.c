@@ -3,6 +3,7 @@
 #include "printers.h"
 #include <string.h>
 
+// TODO: Some error handling?
 int main(int argc, char **argv) {
 
   struct word_length word_length = count();
@@ -13,6 +14,8 @@ int main(int argc, char **argv) {
     print_plain(word_length);
   } else if (strcmp(display_mode, "horizontal") == 0) {
     print_horizontal(word_length);
+  } else if (strcmp(display_mode, "vertical") == 0) {
+    print_vertical(word_length);
   }
 
   return 0;
