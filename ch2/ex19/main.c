@@ -4,27 +4,35 @@
 char *reverse(char *input);
 
 int main() {
-  char *input = "hola que tal";
+  char input[4096];
 
-  char *reversed = reverse(input);
+  int c;
+  int pos = 0;
 
-  printf("input: %s\n", input);
-  printf("output: %s\n", reversed);
+  while ((c = getchar()) != EOF) {
+    input[pos++] = c;
+  }
+
+  input[pos] = '\0';
+
+  char *output = reverse(input);
+
+  printf("\n%s\n", output);
 
   return 0;
 }
 
 char *reverse(char *input) {
-  int size = -1;
+  int size = 0;
 
   for (int i = 0; input[i] != '\0'; i++) {
     size++;
   }
 
-  char *output = malloc((size + 1) * sizeof(char));
+  char *output = malloc((size) * sizeof(char));
 
   for (int i = 0; i < size; i++) {
-    output[i] = input[size - i];
+    output[i] = input[size - i - 1];
   }
   output[size] = '\0';
 
